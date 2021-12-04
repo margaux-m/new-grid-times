@@ -10,7 +10,7 @@ import Button from '../Button';
 
 const Header = () => {
   return (
-    <HeaderWrapper>
+    <header>
       <SuperHeader>
         <Row>
           <ActionGroup>
@@ -29,30 +29,27 @@ const Header = () => {
         </Row>
       </SuperHeader>
       <MainHeader>
+        <DesktopActionGroup>
+          <button>
+            <Search size={24} />
+          </button>
+          <button>
+            <Menu size={24} />
+          </button>
+        </DesktopActionGroup>
         <Logo />
+        <SubscribeWrapper>
+          <Button>
+            Subscribe
+          </Button>
+          <Link>
+            Already a subscriber?
+          </Link>
+        </SubscribeWrapper>
       </MainHeader>
-      <MainCTA>
-        <Button>
-          Subscribe
-        </Button>
-        <Link>
-          Already a subscriber?
-        </Link>
-      </MainCTA>
-    </HeaderWrapper>
+    </header>
   );
 };
-
-const HeaderWrapper = styled.header`
-  @media ${QUERIES.laptopAndUp} {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 72px;
-    margin-left: 120px;
-    margin-right: 120px;
-  }
-`;
 
 const SuperHeader = styled.div`
   padding: 16px;
@@ -60,9 +57,7 @@ const SuperHeader = styled.div`
   color: white;
 
   @media ${QUERIES.laptopAndUp} {
-    background: var(--color-gray-100);
-    padding-left: 0;
-    padding-right: 0;
+    display: none;
   }
 `;
 
@@ -75,21 +70,21 @@ const Row = styled(MaxWidthWrapper)`
 const ActionGroup = styled.div`
   display: flex;
   gap: 24px;
-
-  @media ${QUERIES.laptopAndUp} {
-    color: var(--color-gray-900);
-
-    &:last-child {
-      display: none;
-    }
-  }
-
   /*
     FIX: Remove the inline spacing that comes with
     react-feather icons.
   */
   svg {
     display: block;
+  }
+`;
+
+const DesktopActionGroup = styled(ActionGroup)`
+  display: none;
+
+  @media ${QUERIES.laptopAndUp} {
+    display: flex;
+    color: var(--color-gray-900);
   }
 `;
 
@@ -100,29 +95,37 @@ const MainHeader = styled(MaxWidthWrapper)`
   margin-top: 32px;
   margin-bottom: 48px;
 
-  @media ${QUERIES.laptopAndUp} {
-    margin-top: 16px;
-    margin-bottom: 0px;
-  }
-
-  @media ${QUERIES.tabletOnly} {
+  @media ${QUERIES.tabletAndUp} {
     margin-top: 48px;
     margin-bottom: 72px;
   }
+
+  @media ${QUERIES.laptopAndUp} {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    justify-content: revert;
+    justify-items: start;
+    margin-top: 16px;
+  }
 `;
 
-const MainCTA = styled.div`
+const SubscribeWrapper = styled.div`
   display: none;
 
   @media ${QUERIES.laptopAndUp} {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
+    display: revert;
+    justify-self: end;
+    position: relative;
   }
 `;
 
 const Link = styled.a`
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  margin-top: 8px;
+  color: var(--color-gray-900);
   font-size: calc(14 / 16 * 1rem);
   font-style: italic;
   text-decoration: underline;
